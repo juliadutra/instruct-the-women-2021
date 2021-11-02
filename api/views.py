@@ -20,5 +20,5 @@ class ProjectViewSet(
 def magpy_exception_handler(exc, context):
     response = exception_handler(exc, context)
     if response.status_code == 400:
-        response.data = {"error": "One or more packages doesn't exist"}
+        response.data = {"error": "One or more packages doesn't exist or is duplicated"}
     return response
