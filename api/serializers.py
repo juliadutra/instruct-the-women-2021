@@ -23,6 +23,15 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     packages = PackageSerializer(many=True)
 
+    def validate(self, data):
+        grouped_packages = {}
+        for package in data["packages"]:
+            if package["name"] in grouped_packages.keys():
+                raise serializers.ValidationError()
+            else:
+                grouped_packages[package["name"]] = True
+        return data
+
     def create(self, validated_data):
         print("criando projeto...")
         project = Project.objects.create(name = validated_data["name"])
